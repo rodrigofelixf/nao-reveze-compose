@@ -1,6 +1,6 @@
 package br.com.rodrigo.naoreveze
 
-import Feature
+import Segmentos
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -37,11 +37,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.com.rodrigo.naoreveze.model.BottomMenuContent
-import br.com.rodrigo.naoreveze.ui.theme.AquaBlue
 import br.com.rodrigo.naoreveze.ui.theme.Beige1
 import br.com.rodrigo.naoreveze.ui.theme.Beige2
 import br.com.rodrigo.naoreveze.ui.theme.Beige3
@@ -73,29 +72,29 @@ fun HomeScreen() {
             ChipSection(chips = listOf("Durma bem", "Insonia", "Ansiedade"))
             CurrentMeditation()
             FeatureSection(
-                feature = listOf(
-                    Feature(
+                segmentos = listOf(
+                    Segmentos(
                         title = "Sleep meditation",
                         R.drawable.ic_headphone,
                         BlueViolet1,
                         BlueViolet2,
                         BlueViolet3
                     ),
-                    Feature(
+                    Segmentos(
                         title = "Tips for sleeping",
                         R.drawable.ic_videocam,
                         LightGreen1,
                         LightGreen2,
                         LightGreen3
                     ),
-                    Feature(
+                    Segmentos(
                         title = "Night island",
                         R.drawable.ic_headphone,
                         OrangeYellow1,
                         OrangeYellow2,
                         OrangeYellow3
                     ),
-                    Feature(
+                    Segmentos(
                         title = "Calming sounds",
                         R.drawable.ic_headphone,
                         Beige1,
@@ -105,92 +104,11 @@ fun HomeScreen() {
                 )
             )
         }
-        BottomMenu(items = listOf(
-            BottomMenuContent("Home", R.drawable.ic_home),
-            BottomMenuContent("Meditate", R.drawable.ic_bubble),
-            BottomMenuContent("Sleep", R.drawable.ic_moon),
-            BottomMenuContent("Music", R.drawable.ic_music),
-            BottomMenuContent("Profile", R.drawable.ic_profile),
-        ), modifier = Modifier.align(Alignment.BottomCenter))
+        //aqui ficara o bottomNavigation
     }
 
 }
 
-@Composable
-fun BottomMenu(
-    items: List<BottomMenuContent>,
-    modifier: Modifier = Modifier,
-    activeHighlightColor: Color = ButtonBlue,
-    activeTextColor: Color = Color.White,
-    inactiveTextColor: Color = AquaBlue,
-    initialSelectedItemIndex: Int = 0
-
-) {
-    var selectedItemIndex by remember {
-        mutableStateOf(initialSelectedItemIndex)
-    }
-
-    Row(
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(DeepBlue)
-            .padding(15.dp)
-    ) {
-        items.forEachIndexed { index, item ->
-            BottomMenuItem(
-                item = item,
-                isSelected = index == selectedItemIndex,
-                activeHighlightColor = activeHighlightColor,
-                activeTextColor = activeTextColor,
-                inactiveTextColor = inactiveTextColor,
-            ) {
-                selectedItemIndex = index
-            }
-
-        }
-    }
-
-}
-
-@Composable
-fun BottomMenuItem(
-    item: BottomMenuContent,
-    isSelected: Boolean = false,
-    activeHighlightColor: Color = ButtonBlue,
-    activeTextColor: Color = Color.White,
-    inactiveTextColor: Color = AquaBlue,
-    onItemClick: () -> Unit
-) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.clickable {
-            onItemClick()
-        }
-    ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .background(if (isSelected) activeHighlightColor else Color.Transparent)
-                .padding(10.dp)
-        ) {
-            Icon(
-                painter = painterResource(id = item.iconId),
-                contentDescription = item.title,
-                tint = if (isSelected) activeTextColor else inactiveTextColor,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-        Text(
-            text = item.title,
-            color = if (isSelected) activeTextColor else inactiveTextColor
-        )
-    }
-
-}
 
 @Composable
 fun GreetingSection(
@@ -307,10 +225,10 @@ fun CurrentMeditation(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FeatureSection(feature: List<Feature>) {
+fun FeatureSection(segmentos: List<Segmentos>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "Programas",
+            text = stringResource(R.string.text_o_que_esta_treinando),
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(15.dp)
         )
@@ -320,8 +238,8 @@ fun FeatureSection(feature: List<Feature>) {
             modifier = Modifier.fillMaxHeight()
         ) {
 
-            items(feature.size) {
-                FeatureItem(feature = feature[it])
+            items(segmentos.size) {
+                FeatureItem(segmentos = segmentos[it])
             }
 
         }
@@ -332,14 +250,17 @@ fun FeatureSection(feature: List<Feature>) {
 
 @Composable
 fun FeatureItem(
-    feature: Feature
+    segmentos: Segmentos
 ) {
     BoxWithConstraints(
         modifier = Modifier
             .padding(7.5.dp)
             .aspectRatio(1f)
             .clip(RoundedCornerShape(10.dp))
-            .background(feature.darkColor)
+            .background(segmentos.darkColor)
+            .clickable {
+                // Handle the click
+            }
     ) {
         val width = constraints.maxWidth
         val height = constraints.maxHeight
@@ -385,11 +306,11 @@ fun FeatureItem(
         ) {
             drawPath(
                 path = mediumColoredPath,
-                color = feature.mediumColor
+                color = segmentos.mediumColor
             )
             drawPath(
                 path = lightColoredPath,
-                color = feature.lightColor
+                color = segmentos.lightColor
             )
         }
         Box(
@@ -398,14 +319,14 @@ fun FeatureItem(
                 .padding(15.dp)
         ) {
             Text(
-                text = feature.title,
+                text = segmentos.title,
                 style = MaterialTheme.typography.headlineMedium,
                 lineHeight = 26.sp,
                 modifier = Modifier.align(Alignment.TopStart)
             )
             Icon(
-                painter = painterResource(id = feature.iconId),
-                contentDescription = feature.title,
+                painter = painterResource(id = segmentos.iconId),
+                contentDescription = segmentos.title,
                 tint = Color.White,
                 modifier = Modifier.align(Alignment.BottomStart)
             )
@@ -415,9 +336,6 @@ fun FeatureItem(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .clickable {
-                        // Handle the click
-                    }
                     .align(Alignment.BottomEnd)
                     .clip(RoundedCornerShape(10.dp))
                     .background(ButtonBlue)
