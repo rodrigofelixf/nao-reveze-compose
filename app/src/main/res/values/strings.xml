@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">NaoReveze</string>
     <string name="text_o_que_esta_treinando">O que está treinando?</string>
+    <string name="text_greeting_section">Não é mais necessário aguardar para revezar o exercício com outra pessoa. Agora você pode explorar diferentes variações para substituir o atual, sem preocupações.</string>
 </resources>

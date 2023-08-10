@@ -1,6 +1,12 @@
 package br.com.rodrigo.naoreveze
 
 import Segmentos
+
+
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,16 +20,13 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -43,12 +46,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.rodrigo.naoreveze.components.ShimmerSegmentos
-import br.com.rodrigo.naoreveze.components.shimmerBrush
 import br.com.rodrigo.naoreveze.ui.theme.ButtonBlue
 import br.com.rodrigo.naoreveze.ui.theme.DarkerButtonBlue
 import br.com.rodrigo.naoreveze.ui.theme.DeepBlue
 import br.com.rodrigo.naoreveze.ui.theme.LightRed
 import br.com.rodrigo.naoreveze.ui.theme.TextWhite
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -63,10 +66,13 @@ fun HomeScreen() {
     ) {
         Column(
             modifier = Modifier
-                .padding(bottom = 10.dp)
+                .padding(
+                    bottom = 10.dp,
+                    top = 10.dp
+                )
         ) {
             GreetingSection()
-            ChipSection(chips = listOf("Durma bem", "Insonia", "Ansiedade"))
+            // ChipSection(chips = listOf("Durma bem", "Insonia", "Ansiedade"))
             CurrentMeditation()
             FeatureSection(
                 segmentos = listOf(
@@ -95,7 +101,7 @@ fun HomeScreen() {
                         url = "https://img.freepik.com/fotos-gratis/vista-lateral-de-uma-jovem-determinada-segurando-uma-bola-de-slam-com-as-pernas-e-fazendo-abdominais-para-ter-abdominais-planos_662251-1367.jpg?w=1380&t=st=1691532748~exp=1691533348~hmac=16e7a7ebfc1ad49cb3617b869fc2ef2f80a153551334464641ea89a156382bff"
                     ),
 
-                )
+                    )
             )
         }
         //aqui ficara o bottomNavigation
@@ -115,28 +121,25 @@ fun GreetingSection(
             .fillMaxWidth()
             .padding(15.dp)
     ) {
-        Box(modifier = Modifier.weight(1f)) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+        ) {
             Column(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Boa noite, $name",
+                    text = "Olá, $name",
                     style = MaterialTheme.typography.headlineMedium
                 )
 
                 Text(
-                    text = "Desejamos que você tenha uma ótima meditação, $name.",
+                    text = stringResource(R.string.text_greeting_section),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
         }
-
-        Icon(
-            painter = painterResource(id = R.drawable.ic_search),
-            contentDescription = "Search",
-            tint = Color.White,
-            modifier = Modifier.size(24.dp)
-        )
     }
 }
 
@@ -174,58 +177,100 @@ fun ChipSection(
 @Composable
 fun CurrentMeditation(
     color: Color = LightRed
+    
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
-            .padding(15.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(color)
-            .padding(horizontal = 15.dp, vertical = 20.dp)
-            .fillMaxWidth()
-    ) {
-        Column {
-            Text(
-                text = "Relaxamento Diario",
-                style = MaterialTheme.typography.headlineMedium
-            )
 
-            Text(
-                text = "Meditacao 3-10 min",
-                style = MaterialTheme.typography.bodyMedium,
-                color = TextWhite
-            )
+    val videoUrl = "https://www.youtube.com/watch?v=jfKfPfyJRdk"
+    val openUrl =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+            // Nada para fazer aqui, a ação foi executada
         }
-
-        Box(
-            contentAlignment = Alignment.Center,
+    Box(
+        modifier = Modifier
+            .clickable {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
+                openUrl.launch(intent)
+            }
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(ButtonBlue)
-                .padding(10.dp)
+                .padding(15.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(color)
+                .padding(horizontal = 15.dp, vertical = 20.dp)
+                .fillMaxWidth()
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_play),
-                contentDescription = "Player",
-                tint = Color.White,
-                modifier = Modifier.size(16.dp)
-            )
+            Column(
+            ) {
+                Text(
+                    text = "Relaxamento Diario",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+
+                Text(
+                    text = "Lo-Fi Relaxante",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = TextWhite
+                )
+            }
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(ButtonBlue)
+                    .padding(10.dp)
+
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_play),
+                    contentDescription = "Player",
+                    tint = Color.White,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+
         }
 
     }
+
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FeatureSection(segmentos: List<Segmentos>) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = stringResource(R.string.text_o_que_esta_treinando),
-            style = MaterialTheme.typography.headlineLarge,
-            modifier = Modifier.padding(15.dp)
-        )
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 15.dp)
+
+        ) {
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+            ) {
+                Text(
+                    text = stringResource(R.string.text_o_que_esta_treinando),
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier.padding(15.dp)
+                )
+
+            }
+            Icon(
+                painter = painterResource(id = R.drawable.ic_search),
+                contentDescription = "Search",
+                tint = Color.White,
+                modifier = Modifier
+                    .size(24.dp)
+            )
+        }
+
         LazyVerticalGrid(
             GridCells.Fixed(2),
             contentPadding = PaddingValues(start = 7.5.dp, end = 7.5.dp, bottom = 10.dp),
