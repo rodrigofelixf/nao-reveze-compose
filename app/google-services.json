@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "376478411135",
+    "project_id": "aplicativo-de-teste-b0730",
+    "storage_bucket": "aplicativo-de-teste-b0730.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376478411135:android:bc3cd8bb1f1832ed9f124a",
+        "android_client_info": {
+          "package_name": "br.com.rodrigo.naoreveze"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376478411135-88kb4dtnplp0g699paatk8j1dudtmjah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL2DUGpqsZV2PljKWUZB9-XLrKKecn1us"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376478411135-88kb4dtnplp0g699paatk8j1dudtmjah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:376478411135:android:3059475f03412ee69f124a",
+        "android_client_info": {
+          "package_name": "com.felix.appteste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "376478411135-88kb4dtnplp0g699paatk8j1dudtmjah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAL2DUGpqsZV2PljKWUZB9-XLrKKecn1us"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "376478411135-88kb4dtnplp0g699paatk8j1dudtmjah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
