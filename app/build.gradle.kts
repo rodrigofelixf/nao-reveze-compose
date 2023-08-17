@@ -68,5 +68,11 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // Coil Imagens
     implementation("io.coil-kt:coil-compose:2.4.0")
+    // Firebase
+    implementation ("com.google.firebase:firebase-firestore-ktx:24.7.0")
+    // viewModel
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    
 }

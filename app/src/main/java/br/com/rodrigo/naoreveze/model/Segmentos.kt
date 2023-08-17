@@ -1,4 +1,4 @@
 data class Segmentos(
-    val segmentoNome: String,
-    val url: String
-    )
+    val segmentoNome: String = "",
+    val segmentoImagem: String = ""
+)

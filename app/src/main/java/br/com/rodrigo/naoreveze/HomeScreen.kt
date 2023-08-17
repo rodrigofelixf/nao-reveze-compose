@@ -1,5 +1,6 @@
 package br.com.rodrigo.naoreveze
 
+import SegmentoViewModel
 import Segmentos
 
 
@@ -31,6 +32,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,13 +47,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import br.com.rodrigo.naoreveze.components.ShimmerSegmentos
 import br.com.rodrigo.naoreveze.ui.theme.ButtonBlue
 import br.com.rodrigo.naoreveze.ui.theme.DarkerButtonBlue
 import br.com.rodrigo.naoreveze.ui.theme.DeepBlue
 import br.com.rodrigo.naoreveze.ui.theme.LightRed
 import br.com.rodrigo.naoreveze.ui.theme.TextWhite
-import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -59,6 +61,7 @@ import coil.compose.SubcomposeAsyncImageContent
 
 @Composable
 fun HomeScreen() {
+    val segmentViewModel: SegmentoViewModel = viewModel()
     Box(
         modifier = androidx.compose.ui.Modifier
             .background(DeepBlue)
@@ -74,34 +77,7 @@ fun HomeScreen() {
             GreetingSection()
             // ChipSection(chips = listOf("Durma bem", "Insonia", "Ansiedade"))
             CurrentMeditation()
-            FeatureSection(
-                segmentos = listOf(
-                    Segmentos(
-                        segmentoNome = "Peitoral",
-                        "https://img.freepik.com/fotos-gratis/homem-treinando-na-academia-local_93675-129483.jpg?w=1380&t=st=1691531590~exp=1691532190~hmac=cb8fb72de00e71ec72ecfad4ae3a2246218ccca5148d4112a99e3b7b4069dc02",
-                    ),
-                    Segmentos(
-                        segmentoNome = "Costas",
-                        "https://img.freepik.com/fotos-gratis/academia-homem-bonito-durante-treino_144627-6229.jpg?w=740&t=st=1691531653~exp=1691532253~hmac=c4c911e9bcd335d255cce4577145c13c9d5e38ec2747d7347db2a3b7a5a84eeb"
-                    ),
-                    Segmentos(
-                        segmentoNome = "Pernas",
-                        "https://img.freepik.com/fotos-premium/mulher-fazendo-treinamento-fisico-em-uma-maquina-de-empurrar-extensao-perna-com-pesos_136403-887.jpg?w=1380"
-                    ),
-                    Segmentos(
-                        segmentoNome = "Biceps e Triceps",
-                        "https://picsm.photos/1920/1080"
-                    ),
-                    Segmentos(
-                        segmentoNome = "Ombros",
-                        "https://img.freepik.co1532655~exp=1691533255~hmac=acc6759a4d8cec70a3b7471c7d1cfe24d31cc179187eabf71b664f436ab59779"
-                    ),
-                    Segmentos(
-                        segmentoNome = "Abdomen",
-                        url = "https://img.freepik.com/fotos-gratis/vista-lateral-de-uma-jovem-determinada-segurando-uma-bola-de-slam-com-as-pernas-e-fazendo-abdominais-para-ter-abdominais-planos_662251-1367.jpg?w=1380&t=st=1691532748~exp=1691533348~hmac=16e7a7ebfc1ad49cb3617b869fc2ef2f80a153551334464641ea89a156382bff"
-                    ),
-
-                    )
+            FeatureSection(segmentViewModel.segmentsState.collectAsState().value
             )
         }
         //aqui ficara o bottomNavigation
@@ -177,7 +153,7 @@ fun ChipSection(
 @Composable
 fun CurrentMeditation(
     color: Color = LightRed
-    
+
 ) {
 
     val videoUrl = "https://www.youtube.com/watch?v=jfKfPfyJRdk"
@@ -301,7 +277,7 @@ fun FeatureItem(
             }
     ) {
         SubcomposeAsyncImage(
-            model = segmentos.url,
+            model = segmentos.segmentoImagem,
             contentDescription = "teste",
             contentScale = ContentScale.Crop
         ) {
