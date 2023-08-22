@@ -2,8 +2,6 @@ package br.com.rodrigo.naoreveze.ui.screens
 
 import SegmentoViewModel
 import Segmentos
-
-
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -221,6 +219,8 @@ fun CurrentMeditation(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FeatureSection(segmentos: List<Segmentos>, navController: NavController) {
+
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
