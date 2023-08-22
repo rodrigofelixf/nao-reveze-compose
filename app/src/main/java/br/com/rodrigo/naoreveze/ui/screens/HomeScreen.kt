@@ -1,4 +1,4 @@
-package br.com.rodrigo.naoreveze
+package br.com.rodrigo.naoreveze.ui.screens
 
 import SegmentoViewModel
 import Segmentos
@@ -48,6 +48,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import br.com.rodrigo.naoreveze.R
 import br.com.rodrigo.naoreveze.components.ShimmerSegmentos
 import br.com.rodrigo.naoreveze.ui.theme.ButtonBlue
 import br.com.rodrigo.naoreveze.ui.theme.DarkerButtonBlue
@@ -60,7 +62,7 @@ import coil.compose.SubcomposeAsyncImageContent
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val segmentViewModel: SegmentoViewModel = viewModel()
     Box(
         modifier = androidx.compose.ui.Modifier
@@ -77,7 +79,8 @@ fun HomeScreen() {
             GreetingSection()
             // ChipSection(chips = listOf("Durma bem", "Insonia", "Ansiedade"))
             CurrentMeditation()
-            FeatureSection(segmentViewModel.segmentsState.collectAsState().value
+            FeatureSection(segmentViewModel.segmentsState.collectAsState().value,
+                navController
             )
         }
         //aqui ficara o bottomNavigation
@@ -217,7 +220,7 @@ fun CurrentMeditation(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun FeatureSection(segmentos: List<Segmentos>) {
+fun FeatureSection(segmentos: List<Segmentos>, navController: NavController) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -254,7 +257,7 @@ fun FeatureSection(segmentos: List<Segmentos>) {
         ) {
 
             items(segmentos.size) {
-                FeatureItem(segmentos = segmentos[it])
+                FeatureItem(segmentos = segmentos[it], navController)
             }
 
         }
@@ -265,7 +268,7 @@ fun FeatureSection(segmentos: List<Segmentos>) {
 
 @Composable
 fun FeatureItem(
-    segmentos: Segmentos
+    segmentos: Segmentos, navController: NavController
 ) {
     BoxWithConstraints(
         modifier = Modifier
@@ -273,7 +276,7 @@ fun FeatureItem(
             .aspectRatio(1f)
             .clip(RoundedCornerShape(10.dp))
             .clickable {
-                // Handle the click
+                navController.navigate("detail/${segmentos.segmentoNome}")
             }
     ) {
         SubcomposeAsyncImage(

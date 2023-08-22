@@ -74,5 +74,9 @@ dependencies {
     implementation ("com.google.firebase:firebase-firestore-ktx:24.7.0")
     // viewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
+    val nav_version = "2.5.3"
+
+    implementation("androidx.navigation:navigation-compose:$nav_version")
     
 }
