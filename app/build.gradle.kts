@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "br.com.rodrigo.naoreveze"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "br.com.rodrigo.naoreveze"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -75,8 +75,13 @@ dependencies {
     // viewModel
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 
-    val nav_version = "2.5.3"
+    // navigattion
+    //val nav_version = "2.5.3"
+    //implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    // compose beta e navigation beta
+    implementation( "androidx.compose.ui:ui:1.6.0-alpha04" )
+    implementation( "androidx.navigation:navigation-compose:2.7.0" )
+
     
 }

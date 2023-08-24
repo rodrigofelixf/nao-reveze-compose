@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 fun DetailScreen(segmentName: String) {
     if (segmentName.isNotBlank()) {
         when (segmentName) {
-            "Peitoral" -> Text(text = "Voce clicou no: $segmentName")
-            "Costas" -> Text(text = "Voce clicou no: $segmentName")
-            "Pernas" -> Text(text = "Voce clicou no: $segmentName")
+            "Peitoral" -> WorkoutScreen(text = segmentName)
+            "Costas" -> WorkoutScreen(text = segmentName)
+            "Pernas" -> WorkoutScreen(text = segmentName)
         }
 
     } else {

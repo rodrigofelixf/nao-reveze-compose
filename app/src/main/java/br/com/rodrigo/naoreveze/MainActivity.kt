@@ -3,6 +3,9 @@ package br.com.rodrigo.naoreveze
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.tween
 
 import androidx.compose.runtime.Composable
 
@@ -35,12 +38,24 @@ fun NavigationScreens() {
     val navController = rememberNavController()
 
     NavHost(navController, startDestination = "home") {
-        composable(DestinationScreen.Home.route) {
+        composable(route = DestinationScreen.Home.route,) {
             HomeScreen(navController)
         }
         composable(
-            DestinationScreen.Detail.route,
-            arguments = listOf(navArgument("segmentName") { type = NavType.StringType })
+            route = DestinationScreen.Detail.route,
+            arguments = listOf(navArgument("segmentName") { type = NavType.StringType }),
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(700)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(700)
+                )
+            }
         ) { backStackEntry ->
             val segmentName = backStackEntry.arguments?.getString("segmentName") ?: ""
             DetailScreen(segmentName)
