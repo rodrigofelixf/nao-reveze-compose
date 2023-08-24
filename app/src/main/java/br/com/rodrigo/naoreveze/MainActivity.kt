@@ -5,7 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.withInfiniteAnimationFrameMillis
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 
 import androidx.compose.runtime.Composable
 
@@ -17,6 +22,7 @@ import androidx.navigation.navArgument
 import br.com.rodrigo.naoreveze.model.DestinationScreen
 import br.com.rodrigo.naoreveze.ui.screens.DetailScreen
 import br.com.rodrigo.naoreveze.ui.screens.HomeScreen
+import br.com.rodrigo.naoreveze.ui.screens.SplashScreen
 import br.com.rodrigo.naoreveze.ui.theme.NaoRevezeTheme
 
 
@@ -27,7 +33,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NaoRevezeTheme {
-                NavigationScreens()
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = DestinationScreen.Splash.route
+                ) {
+                    composable(DestinationScreen.Splash.route) {
+                        SplashScreen(navController = navController)
+                    }
+                    composable(route = DestinationScreen.NavigationScreen.route) {
+                        NavigationScreens()
+                    }
+                }
             }
         }
     }
@@ -38,7 +55,7 @@ fun NavigationScreens() {
     val navController = rememberNavController()
 
     NavHost(navController, startDestination = "home") {
-        composable(route = DestinationScreen.Home.route,) {
+        composable(route = DestinationScreen.Home.route) {
             HomeScreen(navController)
         }
         composable(
