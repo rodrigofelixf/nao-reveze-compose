@@ -14,7 +14,7 @@ import br.com.rodrigo.naoreveze.ui.theme.DeepBlue
 
 
 @Composable
-fun WorkoutScreen(text: String) {
+fun WorkoutScreen(segmentoNome: String) {
     Box(
         modifier = androidx.compose.ui.Modifier
             .background(DeepBlue)
@@ -28,7 +28,7 @@ fun WorkoutScreen(text: String) {
                 )
         ) {
             Text(
-                text = text,
+                text = segmentoNome,
                 style = MaterialTheme.typography.headlineMedium
             )
         }
