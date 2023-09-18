@@ -36,7 +36,7 @@ fun SplashScreen(navController: NavHostController) {
         Image(
             painter = painterResource(id = R.drawable.icone_logo),
             contentDescription = null,
-            modifier = Modifier.size(100.dp),
+            modifier = Modifier.size(50.dp),
             contentScale = ContentScale.Fit
         )
 
